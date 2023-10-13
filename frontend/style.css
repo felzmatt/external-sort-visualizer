@@ -10,6 +10,8 @@
   
   .buffer-frame td {
     width: 33%; /* Adjust as needed */
+    border: none;
+    padding: 0;
   }
   
 .highlighted-row {

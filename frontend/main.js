@@ -53,6 +53,11 @@ function buildTable(N, P) {
     // Return the array of inner tables for easy access later
     return innerTables;
 }
+
+function renderAlgorithmStep(tape, step_index) {
+    step = tape[index];
+    
+}
 function highlightFirstTuple(innerTables, pageIndex) {
     // Ensure the provided page index is valid
     if (pageIndex >= 0 && pageIndex < innerTables.length) {
