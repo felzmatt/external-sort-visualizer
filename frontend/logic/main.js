@@ -1,5 +1,5 @@
-function buildTable(N, P) {
-    const bufferFrames = document.getElementById('buffer-frames');
+function buildTable(N, P, target) {
+    const bufferFrames = document.getElementById(target);
     bufferFrames.innerHTML = ''; // Clear previous content
   
     const outerTable = document.createElement('table');

@@ -15,6 +15,11 @@
             <button id="animation">Animation</button>
         </div>
     </div>
+
+    <div id="relation-pages">
+        <!-- Relation will be rendered here-->
+    </div>
+
     <div id="buffer-frames" class="centered-table">
         <!-- The generated table will be appended here -->
       </div>
@@ -28,7 +33,7 @@
         document.addEventListener('DOMContentLoaded', () => {
           const N = 183; // Number of tuples
           const P = 5; // Number of tuples per frame
-          pages = buildTable(N, P);
+          pages = buildTable(N, P, 'relation-pages');
           highlightFirstTuple(pages, 10);
           
         });
@@ -61,8 +66,11 @@
             if (jsonData) {
                 console.log(jsonData);
                 console.log("Ci ha messo " + jsonData.execution_time);
+                let bufframes;
+                bufframes = buildTable(jsonData.tuples, jsonData.frames, 'buffer-frames');
             } else {
                 console.error('No JSON data loaded.');
+                return;
             }
         });
     </script>
