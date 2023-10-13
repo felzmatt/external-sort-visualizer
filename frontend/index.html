@@ -24,10 +24,11 @@
     
       <!-- Call the buildTable function after the DOM has loaded -->
       <script>
+        let pages;
         document.addEventListener('DOMContentLoaded', () => {
           const N = 183; // Number of tuples
           const P = 5; // Number of tuples per frame
-          let pages = buildTable(N, P);
+          pages = buildTable(N, P);
           highlightFirstTuple(pages, 10);
           
         });
