@@ -8,53 +8,20 @@
 </head>
 <body>
     <div id="buffer-frames">
-        <table>
-            <tr>
-                <td>
-                    <div class="frame">
-                        <table class="buffer-frame">
-                            <tr>
-                                <td>1</td>
-                                <td>Marco</td>
-                                <td>24</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Lucia</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Francoise</td>
-                                <td>27</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-                <td>
-                    <div class="frame">
-                        <table>
-                            <tr>
-                                <td>1</td>
-                                <td>Marco</td>
-                                <td>24</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Lucia</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Francoise</td>
-                                <td>27</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        
-    </div>
+        <!-- The generated table will be appended here -->
+      </div>
+    
+      <!-- Include your JavaScript file -->
+      <script src="main.js"></script>
+    
+      <!-- Call the buildTable function after the DOM has loaded -->
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const N = 100; // Number of tuples
+          const P = 6; // Number of tuples per frame
+          let pages = buildTable(N, P);
+          highlightFirstTuple(pages, 6);
+        });
+      </script>
 </body>
 </html>

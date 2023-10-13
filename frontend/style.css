@@ -1,4 +1,19 @@
-table.buffer-frame {
-    background-color: aquamarine;
-    border: 2px solid;
+/* CSS for fixed size inner tables */
+.buffer-frame {
+    width: 100%; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+  }
+  
+  .buffer-frame table {
+    width: 100%; /* Adjust as needed */
+  }
+  
+  .buffer-frame td {
+    width: 33%; /* Adjust as needed */
+  }
+  
+.highlighted-row {
+    background-color: green;
+    color: white; /* Optional: adjust text color for better visibility */
 }
+  
