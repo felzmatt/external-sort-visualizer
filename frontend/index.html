@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="buffer-frames">
+    <div id="control-pane">
+        <div id="load-file">
+            <button id="load-history">Load JSON</button>
+        </div>
+        <div id="animation">
+            <button id="animation">Animation</button>
+        </div>
+    </div>
+    <div id="buffer-frames" class="centered-table">
         <!-- The generated table will be appended here -->
       </div>
     
       <!-- Include your JavaScript file -->
-      <script src="main.js"></script>
+      <script src="logic/main.js"></script>
     
       <!-- Call the buildTable function after the DOM has loaded -->
       <script>
@@ -21,7 +29,41 @@
           const P = 5; // Number of tuples per frame
           let pages = buildTable(N, P);
           highlightFirstTuple(pages, 10);
+          
         });
-      </script>
+        
+        let jsonData; // Define the jsonData variable in the global scope
+
+        document.getElementById("load-history").addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const fileContent = event.target.result;
+                    try {
+                        jsonData = JSON.parse(fileContent); // Assign to the global jsonData variable
+                        console.log('Loaded JSON data:', jsonData);
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                    }
+                };
+                reader.readAsText(file);
+            });
+            // Trigger the file input click
+            input.click();
+        });
+
+        document.getElementById("animation").addEventListener('click', () => {
+            if (jsonData) {
+                console.log(jsonData);
+                console.log("Ci ha messo " + jsonData.execution_time);
+            } else {
+                console.error('No JSON data loaded.');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -71,4 +71,6 @@ function highlightFirstTuple(innerTables, pageIndex) {
       console.error('Invalid page index.');
     }
 }
+
+
   

@@ -18,4 +18,15 @@
     background-color: green;
     color: white; /* Optional: adjust text color for better visibility */
 }
+
+.centered-table {
+    text-align: center; /* Center the content horizontally */
+    margin: 0 auto; /* Center the element within its parent */
+}
+
+#buffer-frames {
+    text-align: center; /* Center the content horizontally */
+    margin: 0 auto; /* Center the element within its parent */
+}
+  
   
