@@ -6,7 +6,7 @@ function buildTable(N, P, target) {
     outerTable.style.borderCollapse = 'collapse'; // Ensure inner tables align correctly
 
     const pages = Math.ceil(N / P);
-    const framesPerRow = 10;
+    const framesPerRow = 8;
     const numOuterRows = Math.ceil(pages / framesPerRow);
     const innerTables = []; // Array to store references to inner tables
 
