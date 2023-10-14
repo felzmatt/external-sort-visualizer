@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV File</title>
+    <style>
+        #dropArea {
+            width: 300px;
+            height: 150px;
+            border: 2px dashed #aaa;
+            text-align: center;
+            padding: 20px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Upload CSV File</h1>
+        <input type="file" id="csvFileInput" accept=".csv">
+        <p>Or drag a CSV file here:</p>
+        <div id="dropArea">
+            Drag a CSV file here
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const csvFileInput = document.getElementById('csvFileInput');
+        const dropArea = document.getElementById('dropArea');
+        let csvData = null;
+
+        // Add an event handler for file upload
+        csvFileInput.addEventListener('change', handleFileUpload);
+
+        // Prevent default behavior of drag and drop
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.style.border = '2px dashed #333';
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.style.border = '2px dashed #aaa';
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.border = '2px dashed #aaa';
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        // Function to truncate a string to 20 characters
+        function truncateString(str) {
+            if (str.length > 20) {
+                return str.substring(0, 20);
+            }
+            return str;
+        }
+
+        // Function to handle the CSV file
+        function handleFile(file) {
+            if (file) {
+                if (file.name.endsWith('.csv')) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const content = e.target.result;
+                        // Store the CSV content in a variable
+                        csvData = content;
+
+                        // Parse the CSV line by line
+                        const lines = content.split('\n');
+                        const newCsvLines = [];
+
+                        for (let i = 0; i < lines.length; i++) {
+                            const columns = lines[i].split(',');
+                            if (columns.length !== 3) {
+                                alert('The CSV file must contain exactly 3 columns per row.');
+                                return;
+                            }
+
+                            const col2 = truncateString(columns[1]);
+                            const col3 = parseFloat(columns[2]);
+                            if (isNaN(col3) || col3 > 2000) {
+                                col3 = 2000;
+                            }
+
+                            // Reconstruct the row with the modified data
+                            newCsvLines.push(`${columns[0]},${col2},${col3}`);
+                        }
+
+                        // Reconstruct the CSV
+                        const modifiedCSV = newCsvLines.join('\n');
+
+                        // Update the text in the dropArea with the uploaded file name
+                        dropArea.innerText = `Uploaded CSV file: ${file.name}`;
+                        alert('CSV file uploaded and processed.');
+
+                        // You can now use "modifiedCSV" for further processing.
+                    };
+                    reader.readAsText(file);
+                } else {
+                    alert('Please upload only CSV files.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
