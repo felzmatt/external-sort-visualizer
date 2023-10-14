@@ -69,6 +69,7 @@ function highlightFirstTuple(innerTables, pageIndex) {
 }
 
 function renderStep(relationTables, bufferTables,step) {
+    console.log("Rendering step: " + step.index);
     const relation = step.relation;
     const buffer = step.buffer;
     const tuplesPerBlock = relation[0].length;

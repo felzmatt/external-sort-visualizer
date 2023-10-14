@@ -43,10 +43,12 @@
         let jsonData; // Define the jsonData variable in the global scope
         
         document.addEventListener('DOMContentLoaded', () => {
-          const N = 183; // Number of tuples
+          const N = 40; // Number of tuples
           const P = 4; // Number of tuples per frame
+          const F = 3;
           pages = buildTable(N, P, 'relation-pages');
-          highlightFirstTuple(pages, 10);
+          bufframes = buildTable(F*4, 4, 'buffer-frames');
+          // highlightFirstTuple(pages, 10);
           
         });
         
@@ -75,15 +77,15 @@
             currentIndex = 0;  // Reset the index
             intervalId = setInterval(updateView,1000);  // Start the loop with a 1-second delay
         }
-        function updateView() {
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        async function updateView() {
             if (jsonData) {
-                // console.log(jsonData);
-                console.log("Ci ha messo " + jsonData.execution_time);
-                bufframes = buildTable(jsonData.frames*4, 4, 'buffer-frames');
-                let steps = jsonData.steps;
                 // console.log(pages, bufframes);
-                for (let s = 0; s < steps.length; s++) {
-                    renderStep(pages, bufframes, steps[s]);
+                for (let s = 0; s < jsonData.steps.length; s++) {
+                    renderStep(pages, bufframes, jsonData.steps[s]);
+                    await sleep(1000);
                 }
 
             } else {
@@ -93,7 +95,7 @@
             
         }
         document.getElementById("animation").addEventListener('click', () => {
-            startLoop();
+            updateView();
         });
     </script>
 </body>
