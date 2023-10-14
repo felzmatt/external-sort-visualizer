@@ -44,7 +44,7 @@
         
         document.addEventListener('DOMContentLoaded', () => {
           const N = 183; // Number of tuples
-          const P = 5; // Number of tuples per frame
+          const P = 4; // Number of tuples per frame
           pages = buildTable(N, P, 'relation-pages');
           highlightFirstTuple(pages, 10);
           
@@ -71,24 +71,29 @@
             // Trigger the file input click
             input.click();
         });
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        function startLoop() {
+            currentIndex = 0;  // Reset the index
+            intervalId = setInterval(updateView,1000);  // Start the loop with a 1-second delay
         }
-        document.getElementById("animation").addEventListener('click', async () => {
+        function updateView() {
             if (jsonData) {
                 console.log(jsonData);
                 console.log("Ci ha messo " + jsonData.execution_time);
-                bufframes = buildTable(jsonData.tuples, jsonData.frames, 'buffer-frames');
+                bufframes = buildTable(jsonData.frames*4, 4, 'buffer-frames');
                 let steps = jsonData.steps;
+                console.log(pages, bufframes);
                 for (let s = 0; s < steps.length; s++) {
                     renderStep(pages, bufframes, steps[s]);
-                    await sleep(1000);
                 }
 
             } else {
                 console.error('No JSON data loaded.');
                 return;
             }
+            
+        }
+        document.getElementById("animation").addEventListener('click', () => {
+            startLoop();
         });
     </script>
 </body>

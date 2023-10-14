@@ -68,29 +68,38 @@ function highlightFirstTuple(innerTables, pageIndex) {
     }
 }
 
-function renderStep(relationTables, bufferTables, step) {
-    console.log(step);
+function renderStep(relationTables, bufferTables,step) {
     const relation = step.relation;
-    console.log(relation);
     const buffer = step.buffer;
-    const pages = step.pages;
-    const frames = step.frames;
-    const tuplesPerBlock = relation[0][0];
+    const tuplesPerBlock = relation[0].length;
+    const frames = buffer.length;
+    const pages = relation.length;
+    // console.log(frames, pages);
+    console.log(tuplesPerBlock);
     
     // render buffer frames
     for (let f = 0; f < frames; f++) {
         const pageTuples = bufferTables[f].querySelectorAll('tr');
+        //console.log(pageTuples);
         for (let t = 0; t < tuplesPerBlock; t++) {
-            console.log(buffer[t][t])
-            pageTuples[t].innerHTML = buffer[f][t];
+            // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
+            const tupleAttrs = pageTuples[t].querySelectorAll('td');
+            tupleAttrs[0] = buffer[f][t][0];
+            tupleAttrs[1] = buffer[f][t][1];
+            tupleAttrs[2] = buffer[f][t][2];
         }
     }
 
     // render relation pages
     for (let p = 0; p < pages; p++) {
         const pageTuples = relationTables[p].querySelectorAll('tr');
+        console.log(pageTuples);
         for (let t = 0; t < tuplesPerBlock; t++) {
-            pageTuples[t].innerHTML = relation[p][t];
+            // console.log(relation[p][t]);
+            const tupleAttrs = pageTuples[t].querySelectorAll('td');
+            tupleAttrs[0] = relation[p][t][0];
+            tupleAttrs[1] = relation[p][t][1];
+            tupleAttrs[2] = relation[p][t][2];
         }
     }
 
