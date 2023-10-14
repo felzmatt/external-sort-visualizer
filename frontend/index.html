@@ -20,6 +20,15 @@
         <!-- Relation will be rendered here-->
     </div>
 
+    <div id="algorithm-details">
+        <table>
+            <tr>
+                <th>Index</th>
+                <th>Phase</th>
+            </tr>
+        </table>
+    </div>
+
     <div id="buffer-frames" class="centered-table">
         <!-- The generated table will be appended here -->
       </div>
@@ -30,6 +39,9 @@
       <!-- Call the buildTable function after the DOM has loaded -->
       <script>
         let pages;
+        let bufframes;
+        let jsonData; // Define the jsonData variable in the global scope
+        
         document.addEventListener('DOMContentLoaded', () => {
           const N = 183; // Number of tuples
           const P = 5; // Number of tuples per frame
@@ -38,8 +50,6 @@
           
         });
         
-        let jsonData; // Define the jsonData variable in the global scope
-
         document.getElementById("load-history").addEventListener('click', () => {
             const input = document.createElement('input');
             input.type = 'file';
@@ -61,13 +71,20 @@
             // Trigger the file input click
             input.click();
         });
-
-        document.getElementById("animation").addEventListener('click', () => {
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        document.getElementById("animation").addEventListener('click', async () => {
             if (jsonData) {
                 console.log(jsonData);
                 console.log("Ci ha messo " + jsonData.execution_time);
-                let bufframes;
                 bufframes = buildTable(jsonData.tuples, jsonData.frames, 'buffer-frames');
+                let steps = jsonData.steps;
+                for (let s = 0; s < steps.length; s++) {
+                    renderStep(pages, bufframes, steps[s]);
+                    await sleep(1000);
+                }
+
             } else {
                 console.error('No JSON data loaded.');
                 return;

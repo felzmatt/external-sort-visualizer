@@ -54,10 +54,6 @@ function buildTable(N, P, target) {
     return innerTables;
 }
 
-function renderAlgorithmStep(tape, step_index) {
-    step = tape[index];
-    
-}
 function highlightFirstTuple(innerTables, pageIndex) {
     // Ensure the provided page index is valid
     if (pageIndex >= 0 && pageIndex < innerTables.length) {
@@ -70,6 +66,34 @@ function highlightFirstTuple(innerTables, pageIndex) {
     } else {
       console.error('Invalid page index.');
     }
+}
+
+function renderStep(relationTables, bufferTables, step) {
+    console.log(step);
+    const relation = step.relation;
+    console.log(relation);
+    const buffer = step.buffer;
+    const pages = step.pages;
+    const frames = step.frames;
+    const tuplesPerBlock = relation[0][0];
+    
+    // render buffer frames
+    for (let f = 0; f < frames; f++) {
+        const pageTuples = bufferTables[f].querySelectorAll('tr');
+        for (let t = 0; t < tuplesPerBlock; t++) {
+            console.log(buffer[t][t])
+            pageTuples[t].innerHTML = buffer[f][t];
+        }
+    }
+
+    // render relation pages
+    for (let p = 0; p < pages; p++) {
+        const pageTuples = relationTables[p].querySelectorAll('tr');
+        for (let t = 0; t < tuplesPerBlock; t++) {
+            pageTuples[t].innerHTML = relation[p][t];
+        }
+    }
+
 }
 
 
