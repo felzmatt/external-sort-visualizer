@@ -79,27 +79,28 @@ function renderStep(relationTables, bufferTables,step) {
     
     // render buffer frames
     for (let f = 0; f < frames; f++) {
-        const pageTuples = bufferTables[f].querySelectorAll('tr');
+        let bufTuples = bufferTables[f].querySelectorAll('tr');
         //console.log(pageTuples);
         for (let t = 0; t < tuplesPerBlock; t++) {
             // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
-            const tupleAttrs = pageTuples[t].querySelectorAll('td');
-            tupleAttrs[0] = buffer[f][t][0];
-            tupleAttrs[1] = buffer[f][t][1];
-            tupleAttrs[2] = buffer[f][t][2];
+            let bufTupleAttrs = bufTuples[t].querySelectorAll('td');
+            // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
+            bufTupleAttrs[0].innerHTML = buffer[f][t][0];
+            bufTupleAttrs[1].innerHTML = buffer[f][t][1];
+            bufTupleAttrs[2].innerHTML = buffer[f][t][2];
         }
     }
 
     // render relation pages
     for (let p = 0; p < pages; p++) {
-        const pageTuples = relationTables[p].querySelectorAll('tr');
-        console.log(pageTuples);
+        let relTuples = relationTables[p].querySelectorAll('tr');
+        // console.log(pageTuples);
         for (let t = 0; t < tuplesPerBlock; t++) {
             // console.log(relation[p][t]);
-            const tupleAttrs = pageTuples[t].querySelectorAll('td');
-            tupleAttrs[0] = relation[p][t][0];
-            tupleAttrs[1] = relation[p][t][1];
-            tupleAttrs[2] = relation[p][t][2];
+            let relTupleAttrs = relTuples[t].querySelectorAll('td');
+            relTupleAttrs[0].innerHTML = relation[p][t][0];
+            relTupleAttrs[1].innerHTML = relation[p][t][1];
+            relTupleAttrs[2].innerHTML = relation[p][t][2];
         }
     }
 

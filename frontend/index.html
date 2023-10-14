@@ -77,11 +77,11 @@
         }
         function updateView() {
             if (jsonData) {
-                console.log(jsonData);
+                // console.log(jsonData);
                 console.log("Ci ha messo " + jsonData.execution_time);
                 bufframes = buildTable(jsonData.frames*4, 4, 'buffer-frames');
                 let steps = jsonData.steps;
-                console.log(pages, bufframes);
+                // console.log(pages, bufframes);
                 for (let s = 0; s < steps.length; s++) {
                     renderStep(pages, bufframes, steps[s]);
                 }
