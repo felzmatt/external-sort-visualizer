@@ -14,7 +14,7 @@ class Sort:
         self.F = F
         self.P = P
         self.B = math.ceil(len(csvdata)/P)
-        self.tuples_per_frame = 4
+        self.tuples_per_frame = P
 
         self.steps = []
         self.buffer = []

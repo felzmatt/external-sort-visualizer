@@ -1,8 +1,9 @@
 import sys
+import json
 from algorithm.sort_algorithm import Sort
 
 import csv
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 
 app = Flask(__name__)
 
@@ -30,15 +31,19 @@ def sort():
         data = []
 
         # Read the CSV file and extract data
-        reader = csv.reader(file)
+        reader = csv.reader(file.stream.read().decode("UTF-8").splitlines())
         for row in reader:
             data.append(row)
-
+        print(len(data))
+        print(data[0])
         # Call the custom sorting function
         sorter = Sort(F=F, P=P, csvdata=data)
         sorter.sort()
         history = sorter.export_json()
-        return jsonify({'history': history})
+        # Return the JSON response with appropriate content type
+        return Response(history, mimetype='application/json')
+        # return jsonify(history)
+        # return jsonify({"status":data})
 
     return jsonify({'error': 'Invalid file format. Please upload a CSV file.'})
 

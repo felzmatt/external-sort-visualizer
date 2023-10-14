@@ -8,12 +8,20 @@
 </head>
 <body>
     <div id="control-pane">
-        <div id="load-file">
-            <button id="load-history">Load JSON</button>
-        </div>
-        <div id="animation">
-            <button id="animation">Animation</button>
-        </div>
+        <h1>Custom Sort Example</h1>
+        <!-- Form to send the CSV file to the backed sorter-->
+        <form id="sortForm" enctype="multipart/form-data">
+            <label for="file">Choose a CSV file:</label>
+            <input type="file" name="file" id="file" accept=".csv"><br><br>
+            
+            <label for="F">F:</label>
+            <input type="number" name="F" id="F"><br><br>
+            
+            <label for="P">P:</label>
+            <input type="number" name="P" id="P"><br><br>
+        
+            <button type="submit">Sort CSV</button>
+          </form>
     </div>
 
     <div id="relation-pages">
@@ -46,44 +54,10 @@
         let bufframes;
         let jsonData; // Define the jsonData variable in the global scope
         
-        document.addEventListener('DOMContentLoaded', () => {
-          const N = 80; // Number of tuples
-          const P = 4; // Number of tuples per frame
-          const F = 12;
-          pages = buildTable(N, P, 'relation-pages');
-          bufframes = buildTable(F*4, 4, 'buffer-frames');
-          // highlightFirstTuple(pages, 10);
-          
-        });
-        
-        document.getElementById("load-history").addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const fileContent = event.target.result;
-                    try {
-                        jsonData = JSON.parse(fileContent); // Assign to the global jsonData variable
-                        console.log('Loaded JSON data:', jsonData);
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error);
-                    }
-                };
-                reader.readAsText(file);
-            });
-            // Trigger the file input click
-            input.click();
-        });
-        function startLoop() {
-            currentIndex = 0;  // Reset the index
-            intervalId = setInterval(updateView,1000);  // Start the loop with a 1-second delay
-        }
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
+        
         async function updateView() {
             if (jsonData) {
                 // console.log(pages, bufframes);
@@ -98,8 +72,29 @@
             }
             
         }
-        document.getElementById("animation").addEventListener('click', () => {
-            updateView();
+        document.getElementById('sortForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission
+            
+            // Create a FormData object to send the form data
+            const formData = new FormData(event.target);
+            
+            // Make an AJAX request to the /sort route
+            fetch('/sort', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                // Call a function based on the parsed data
+                jsonData = data;
+                const P = jsonData.pages;
+                const F = jsonData.frames;
+                const N = jsonData.tuples;
+                pages = buildTable(N, P, 'relation-pages');
+                bufframes = buildTable(F*4, 4, 'buffer-frames');
+                updateView();
+            })
+            .catch(error => console.error('Error:', error));
         });
     </script>
 </body>
