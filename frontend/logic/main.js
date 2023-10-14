@@ -68,8 +68,35 @@ function highlightFirstTuple(innerTables, pageIndex) {
     }
 }
 
+function updateDataRowInAlgorithmDetails(index, phase) {
+    const table = document.querySelector('#algorithm-details table');
+    const rows = table.rows;
+  
+    // Check if a data row already exists
+    if (rows.length === 2) {
+      const dataRow = rows[1];
+      const cells = dataRow.cells;
+  
+      // Update data in the existing cells
+      cells[0].innerText = index;
+      cells[1].innerText = phase;
+    } else {
+      // If no data row exists, create a new one
+      const newRow = table.insertRow();  // Create a new row
+  
+      // Create cells and add data to each cell
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+  
+      // Populate data in the cells
+      cell1.innerText = index;
+      cell2.innerText = phase;
+    }
+  }
+
 function renderStep(relationTables, bufferTables,step) {
     console.log("Rendering step: " + step.index);
+    updateDataRowInAlgorithmDetails(step.index, step.phase);
     const relation = step.relation;
     const buffer = step.buffer;
     const tuplesPerBlock = relation[0].length;
@@ -86,9 +113,16 @@ function renderStep(relationTables, bufferTables,step) {
             // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
             let bufTupleAttrs = bufTuples[t].querySelectorAll('td');
             // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
-            bufTupleAttrs[0].innerHTML = buffer[f][t][0];
-            bufTupleAttrs[1].innerHTML = buffer[f][t][1];
-            bufTupleAttrs[2].innerHTML = buffer[f][t][2];
+            if (buffer[f][t]) {
+                bufTupleAttrs[0].innerHTML = buffer[f][t][0];
+                bufTupleAttrs[1].innerHTML = buffer[f][t][1];
+                bufTupleAttrs[2].innerHTML = buffer[f][t][2];
+            } else {
+                bufTupleAttrs[0].innerHTML = "-";
+                bufTupleAttrs[1].innerHTML = "-";
+                bufTupleAttrs[2].innerHTML = "-";
+            }
+            
         }
     }
 
@@ -99,9 +133,15 @@ function renderStep(relationTables, bufferTables,step) {
         for (let t = 0; t < tuplesPerBlock; t++) {
             // console.log(relation[p][t]);
             let relTupleAttrs = relTuples[t].querySelectorAll('td');
-            relTupleAttrs[0].innerHTML = relation[p][t][0];
-            relTupleAttrs[1].innerHTML = relation[p][t][1];
-            relTupleAttrs[2].innerHTML = relation[p][t][2];
+            if (relation[p][t]) {
+                relTupleAttrs[0].innerHTML = relation[p][t][0];
+                relTupleAttrs[1].innerHTML = relation[p][t][1];
+                relTupleAttrs[2].innerHTML = relation[p][t][2];
+            } else {
+                relTupleAttrs[0].innerHTML = "-";
+                relTupleAttrs[1].innerHTML = "-";
+                relTupleAttrs[2].innerHTML = "-";
+            }
         }
     }
 
