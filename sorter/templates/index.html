@@ -74,7 +74,7 @@
                 const N = jsonData.tuples;
                 const P = jsonData.steps[0].relation[0].length;
                 pages = buildTable(N, P, 'relation-pages');
-                bufframes = buildTable(F*4, 4, 'buffer-frames');
+                bufframes = buildTable(F*P, P, 'buffer-frames');
                 updateView();
             })
             .catch(error => console.error('Error:', error));
