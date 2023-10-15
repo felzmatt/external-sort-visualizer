@@ -144,7 +144,7 @@ button:last-child {
 }
 
 #algorithm-details table {
-  width: 100%;
+  width: 600px;
   border-collapse: collapse;
   margin-top: 10px;
 }
