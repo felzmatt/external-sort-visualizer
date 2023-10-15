@@ -8,7 +8,7 @@ import json
 
 class Sort:
     """
-    Implements the external multipass sort algorithm
+    This class simulates the algorithm by representing the used data structure and recording each step.
     """
     def __init__(self, F: int, P: int, csvdata):
         self.F = F
@@ -25,11 +25,6 @@ class Sort:
         for _ in range(self.F):
             data = [Tuple(empty = True) for _ in range(self.tuples_per_frame)]
             self.buffer.append(Frame(data))
-
-        # values = list()
-        #modification
-        # values = list(generate_random_tuple() for _ in range(self.B * self.tuples_per_frame))
-        # random.shuffle(values)
 
         for i in range(self.B):
             data = [Tuple(value = csvdata[i * self.tuples_per_frame + j]) for j in range(self.tuples_per_frame)]
@@ -55,11 +50,9 @@ class Sort:
         
 
     """
-    Sort the relation data, creating a series of StateSnapshot snapshots that the GUI will later visualize
+    Execute the sorting and append transitions to the tape
     """
     def sort(self):
-        # Step 1. Create runs of F frames
-
         self.snapshot('Step 1: Create runs')
 
         run_start, run_end = [], []
@@ -86,7 +79,7 @@ class Sort:
         self.snapshot('Step 2: Merge runs')
 
         if self.F - 1 == 1 and len(run_start) > 1:
-            self.snapshot('Unable to merge with only 2 frames')
+            self.snapshot('Cannot merge with only 2 frames')
             return
 
         while len(run_start) > 1:
