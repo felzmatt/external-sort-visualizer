@@ -21,7 +21,12 @@ function buildTable(N, P, target) {
             if (currentIndex >= pages) break;
   
             const innerTable = document.createElement('table');
-            innerTable.classList.add('buffer-frame');
+            if (target === 'buffer-frames') {
+                innerTable.classList.add('buffer-frame');
+            } else {
+                innerTable.classList.add('relation-page');
+            }
+            
             innerTable.style.border = '1px solid black'; // Border for demonstration
   
             for (let k = 0; k < P; k++) {
@@ -49,7 +54,6 @@ function buildTable(N, P, target) {
     }
   
     bufferFrames.appendChild(outerTable);
-
     // Return the array of inner tables for easy access later
     return innerTables;
 }

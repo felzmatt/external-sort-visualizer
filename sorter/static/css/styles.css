@@ -1,9 +1,20 @@
 /* CSS for fixed size inner tables */
 .buffer-frame {
+  background-color: cadetblue;
     width: 300px; /* Adjust as needed */
     height: 100px; /* Adjust as needed */
   }
-  
+
+  .relation-page {
+    background-color: rgb(205, 120, 50);
+      width: 300px; /* Adjust as needed */
+      height: 100px; /* Adjust as needed */
+    }
+    .output-frame {
+      background-color: pink;
+        width: 300px; /* Adjust as needed */
+        height: 100px; /* Adjust as needed */
+      }
   .buffer-frame table {
     width: 100%; /* Adjust as needed */
   }
