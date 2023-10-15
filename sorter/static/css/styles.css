@@ -6,10 +6,56 @@
   }
 
   .relation-page {
-    background-color: rgb(205, 120, 50);
-      width: 300px; /* Adjust as needed */
-      height: 100px; /* Adjust as needed */
-    }
+    width: 300px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+  }
+
+  .relation-page.base {
+    background-color: white;
+  }
+
+  .relation-page.run-1 {
+    background-color: #FF5733; /* Red */
+  }
+  
+  .relation-page.run-2 {
+    background-color: #FFC300; /* Yellow */
+  }
+  
+  .relation-page.run-3 {
+    background-color: #DAF7A6; /* Light green */
+  }
+  
+  .relation-page.run-4 {
+    background-color: #7FB3D5; /* Light blue */
+  }
+  
+  .relation-page.run-5 {
+    background-color: #C2B280; /* Tan */
+  }
+  
+  .relation-page.run-6 {
+    background-color: #8B78E6; /* Purple */
+  }
+  
+  .relation-page.run-7 {
+    background-color: #FF6F61; /* Coral */
+  }
+  
+  .relation-page.run-8 {
+    background-color: #4CAF50; /* Green */
+  }
+  
+  .relation-page.run-9 {
+    background-color: #FF4500; /* OrangeRed */
+  }
+  
+  .relation-page.run-10 {
+    background-color: #3498DB; /* DodgerBlue */
+  }
+  
+  
+
     .output-frame {
       background-color: pink;
         width: 300px; /* Adjust as needed */
