@@ -54,6 +54,32 @@
         let bufframes;
         let jsonData; // Define the jsonData variable in the global scope
         
+        
+        document.getElementById('sortForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission
+            
+            // Create a FormData object to send the form data
+            const formData = new FormData(event.target);
+            
+            // Make an AJAX request to the /sort route
+            fetch('/sort', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                // Call a function based on the parsed data
+                jsonData = data;
+                const F = jsonData.frames;
+                const N = jsonData.tuples;
+                const P = jsonData.steps[0].relation[0].length;
+                pages = buildTable(N, P, 'relation-pages');
+                bufframes = buildTable(F*4, 4, 'buffer-frames');
+                updateView();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
@@ -72,30 +98,6 @@
             }
             
         }
-        document.getElementById('sortForm').addEventListener('submit', function(event) {
-            event.preventDefault();  // Prevent the default form submission
-            
-            // Create a FormData object to send the form data
-            const formData = new FormData(event.target);
-            
-            // Make an AJAX request to the /sort route
-            fetch('/sort', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())  // Parse the JSON response
-            .then(data => {
-                // Call a function based on the parsed data
-                jsonData = data;
-                const P = jsonData.pages;
-                const F = jsonData.frames;
-                const N = jsonData.tuples;
-                pages = buildTable(N, P, 'relation-pages');
-                bufframes = buildTable(F*4, 4, 'buffer-frames');
-                updateView();
-            })
-            .catch(error => console.error('Error:', error));
-        });
     </script>
 </body>
 </html>
