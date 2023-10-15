@@ -15,13 +15,19 @@
             <input type="file" name="file" id="file" accept=".csv"><br><br>
             
             <label for="F">F:</label>
-            <input type="number" name="F" id="F"><br><br>
+            <input type="number" name="F" id="F" value="3"><br><br>
             
             <label for="P">P:</label>
-            <input type="number" name="P" id="P"><br><br>
+            <input type="number" name="P" id="P" value="5"><br><br>
         
             <button type="submit">Sort CSV</button>
           </form>
+          <div id="controls">
+            <button onclick="start()">Start</button>
+            <button onclick="pause()">Pause</button>
+            <button onclick="previous()">Previous</button>
+            <button onclick="next()">Next</button>
+          </div>
     </div>
 
     <div id="relation-pages">

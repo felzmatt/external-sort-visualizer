@@ -85,5 +85,88 @@
     text-align: center; /* Center the content horizontally */
     margin: 0 auto; /* Center the element within its parent */
 }
-  
-  
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+#control-pane {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+
+#algorithm-details {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#algorithm-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#algorithm-details th, #algorithm-details td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+#algorithm-details th {
+  background-color: #f0f0f0;
+}
+
+#algorithm-details th, #algorithm-details td {
+  width: 50%; /* Equal width for table cells */
+}
+
+#algorithm-details tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+#algorithm-details tr:hover {
+  background-color: #f0f0f0;
+}
