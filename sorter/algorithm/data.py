@@ -6,7 +6,8 @@ import enum
 @total_ordering
 class Tuple:
     """
-    A tuple of the relationship. If empty == True, represents an empty slot
+    Total ordering is defined over this class. The ordering is performed over all attributes.
+    Empty is used to track empty space if frames of both pages and buffer.
     """
     def __init__(self, value = 0, empty = False):
         self.value = value
@@ -15,9 +16,12 @@ class Tuple:
     def __str__(self):
         return "-" if self.empty else str(self.value)
 
-    def __lt__(self, other): return self.value < other.value
-    def __eq__(self, other): return self.value == other.value
-    def __repr__(self): return '-' if self.empty else str(self.value)
+    def __lt__(self, other):
+        return self.value < other.value
+    def __eq__(self, other):
+        return self.value == other.value
+    def __repr__(self):
+        return '-' if self.empty else str(self.value)
 
 class Frame:
     """
@@ -57,14 +61,16 @@ class Frame:
                 self.data[i] = deepcopy(x)
                 break
 
-    def __repr__(self): return str(self.data)
-    def __len__(self): return len(self.data)
+    def __repr__(self):
+        return str(self.data)
+    def __len__(self):
+        return len(self.data)
 
 class AlgorithmPhase(enum.Enum):
     CREATE_RUNS = 0,
     MERGE_RUNS = 1
 
-class StateSnapshot:
+class AlgorithmStep:
     """
     A snapshot of the relation and buffer state
     """

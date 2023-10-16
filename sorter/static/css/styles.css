@@ -3,11 +3,15 @@
   background-color: cadetblue;
     width: 300px; /* Adjust as needed */
     height: 100px; /* Adjust as needed */
+    font-size: 20px;
+    font-weight: bold;
   }
 
   .relation-page {
     width: 300px; /* Adjust as needed */
     height: 100px; /* Adjust as needed */
+    font-size: 20px;
+    font-weight: bold;
   }
 
   .relation-page.base {
@@ -60,6 +64,8 @@
       background-color: pink;
         width: 300px; /* Adjust as needed */
         height: 100px; /* Adjust as needed */
+        font-size: 20px;
+        font-weight: bold;
       }
   .buffer-frame table {
     width: 100%; /* Adjust as needed */

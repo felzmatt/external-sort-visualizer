@@ -15,3 +15,5 @@ def main():
         if "--export-history" in sys.argv:
             with open("history.json", "w") as f:
                 f.write(history)
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,5 @@
-import random
 import math
-from algorithm.data import Tuple, Frame, StateSnapshot, AlgorithmPhase
-from algorithm.utils import generate_random_tuple
+from algorithm.data import Tuple, Frame, AlgorithmStep, AlgorithmPhase
 from copy import deepcopy
 import datetime
 import json
@@ -78,7 +76,7 @@ class Sort:
 
         self.snapshot('Step 2: Merge runs')
 
-        if self.F - 1 == 1 and len(run_start) > 1:
+        if self.F == 2 and len(run_start) > 1:
             self.snapshot('Cannot merge with only 2 frames')
             return
 
@@ -101,7 +99,7 @@ class Sort:
                 # Prepare output frame
                 self.buffer[num_runs].clear()
 
-                self.snapshot(f'Load first frames for {run_start[first_frame]} - {run_end[first_frame+num_runs-1]}')
+                self.snapshot(f'Load first frames for {run_start[first_frame]} - {run_end[first_frame+num_runs-1]}. Runs length = {num_runs}')
 
                 while True:
                     frame_id, t = self.next_min_tuple(0, num_runs)
@@ -169,4 +167,4 @@ class Sort:
             self.relation[pos_in_relation], self.buffer[pos_in_buffer]
 
     def snapshot(self, phase: AlgorithmPhase, min_index: int = -1):
-        self.steps.append(StateSnapshot(self.buffer, self.relation, phase, min_index))
+        self.steps.append(AlgorithmStep(self.buffer, self.relation, phase, min_index))
