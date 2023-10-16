@@ -1,4 +1,4 @@
-function buildTable(N, P, target) {
+function buildTable(N, P, A, csvdata, target) {
     const bufferFrames = document.getElementById(target);
     bufferFrames.innerHTML = ''; // Clear previous content
   
@@ -31,19 +31,19 @@ function buildTable(N, P, target) {
   
             for (let k = 0; k < P; k++) {
                 const row = innerTable.insertRow();
-                const cell1 = row.insertCell(0);
-                const cell2 = row.insertCell(1);
-                const cell3 = row.insertCell(2);
-                if (tuples >= N) {
-                    cell1.innerText = "-";
-                    cell2.innerText = "-";
-                    cell3.innerText = "-"; // Random age for demonstration
-                } else {
-                    cell1.innerText = tuples;
-                    cell2.innerText = `Name${currentIndex}`;
-                    cell3.innerText = Math.floor(Math.random() * 100); // Random age for demonstration
-                    tuples++;
+                // let cells = [];
+                for (let a = 0; a < A; a++) {
+                    let cell = row.insertCell(a);
+                    // cells.push(cell);
+                    if (tuples >= N || target === 'buffer-frames') {
+                        cell.innerHTML = "-";
+                    } else {
+                        cell.innerHTML = csvdata[tuples][a];
+                        
+                    }
+
                 }
+                tuples++;
             }
   
             const outerCell = outerRow.insertCell();
@@ -98,7 +98,7 @@ function updateDataRowInAlgorithmDetails(index, phase) {
     }
   }
 
-function renderStep(relationTables, bufferTables,step) {
+function renderStep(relationTables, bufferTables,step, A) {
     console.log("Rendering step: " + step.index);
     updateDataRowInAlgorithmDetails(step.index, step.phase);
     const relation = step.relation;
@@ -117,16 +117,13 @@ function renderStep(relationTables, bufferTables,step) {
             // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
             let bufTupleAttrs = bufTuples[t].querySelectorAll('td');
             // console.log("at position " + f + " "+ t+ " "+ buffer[f][t]);
-            if (buffer[f][t]) {
-                bufTupleAttrs[0].innerHTML = buffer[f][t][0];
-                bufTupleAttrs[1].innerHTML = buffer[f][t][1];
-                bufTupleAttrs[2].innerHTML = buffer[f][t][2];
-            } else {
-                bufTupleAttrs[0].innerHTML = "-";
-                bufTupleAttrs[1].innerHTML = "-";
-                bufTupleAttrs[2].innerHTML = "-";
+            for (let a = 0; a < A; a++) {
+                if (buffer[f][t]) {
+                    bufTupleAttrs[a].innerHTML = buffer[f][t][a];
+                } else {
+                    bufTupleAttrs[a].innerHTML = "-";
+                }
             }
-            
         }
     }
 
@@ -137,14 +134,12 @@ function renderStep(relationTables, bufferTables,step) {
         for (let t = 0; t < tuplesPerBlock; t++) {
             // console.log(relation[p][t]);
             let relTupleAttrs = relTuples[t].querySelectorAll('td');
-            if (relation[p][t]) {
-                relTupleAttrs[0].innerHTML = relation[p][t][0];
-                relTupleAttrs[1].innerHTML = relation[p][t][1];
-                relTupleAttrs[2].innerHTML = relation[p][t][2];
-            } else {
-                relTupleAttrs[0].innerHTML = "-";
-                relTupleAttrs[1].innerHTML = "-";
-                relTupleAttrs[2].innerHTML = "-";
+            for (let a = 0; a < A; a++) {
+                if (relation[p][t]) {
+                    relTupleAttrs[a].innerHTML = relation[p][t][a];
+                } else {
+                    relTupleAttrs[a].innerHTML = "-";
+                }
             }
         }
     }

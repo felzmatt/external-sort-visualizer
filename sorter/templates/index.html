@@ -22,6 +22,9 @@
         
             <button type="submit">Sort CSV</button>
           </form>
+          <div id="results">
+            <span id="time"></span>
+          </div>
           <div id="controls">
             <button onclick="start()">Start</button>
             <button onclick="pause()">Pause</button>
@@ -64,14 +67,45 @@
         let jsonData; // Define the jsonData variable in the global scope
         let currentIndex = 0;  // Current index for tracking the displayed entry
         let pauseFlag = false;
+        let attrs;
+        let rows = [];
 
-        
-        
         document.getElementById('sortForm').addEventListener('submit', function(event) {
             event.preventDefault();  // Prevent the default form submission
             
             // Create a FormData object to send the form data
             const formData = new FormData(event.target);
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];  // Get the selected file
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const csvData = e.target.result;
+                    let rowsText = csvData.split('\n');
+                    for (let j = 0; j < rowsText.length; j++) {
+                        rows.push(rowsText[j].trim().split(","));
+                    }
+
+                    
+
+                    if (rows.length > 0) {
+                        const firstRow = rowsText[0].trim();
+                        const attributes = firstRow.split(',');
+
+                        // Assign the number of attributes to the 'attrs' variable
+                        attrs = attributes.length;
+                        console.log('Number of attributes:', attrs);
+
+                        // Call other functions or perform further actions based on the parsed data
+                    }
+                };
+
+                reader.readAsText(file);
+            } else {
+                console.error('No file selected.');
+            }
             
             // Make an AJAX request to the /sort route
             fetch('/sort', {
@@ -82,11 +116,15 @@
             .then(data => {
                 // Call a function based on the parsed data
                 jsonData = data;
+                document.getElementById("time").innerHTML = "Backend simulated ordering in " + jsonData.execution_time;
                 const F = jsonData.frames;
-                const N = jsonData.tuples;
+                // const N = jsonData.tuples;
+                const N = rows.length;
                 const P = jsonData.steps[0].relation[0].length;
-                pages = buildTable(N, P, 'relation-pages');
-                bufframes = buildTable(F*P, P, 'buffer-frames');
+                attrs = jsonData.steps[0].relation[0][0].length;
+                let csvdata = jsonData.steps[0].relation;
+                pages = buildTable(N, P, attrs, rows, 'relation-pages');
+                bufframes = buildTable(F*P, P, attrs, rows, 'buffer-frames');
                 bufframes[bufframes.length - 1].classList.replace('buffer-frame', 'output-frame');
                 // updateView();
             })
@@ -113,7 +151,7 @@
         function previous() {
             if ((currentIndex > 0) && pauseFlag) {
                 currentIndex--;
-                renderStep(pages, bufframes, jsonData.steps[currentIndex]);
+                renderStep(pages, bufframes, jsonData.steps[currentIndex], attrs);
                 // currentIndex++;
             }
         }
@@ -121,7 +159,7 @@
         function next() {
             if ((currentIndex < jsonData.steps.length - 1) && pauseFlag) {
                 currentIndex++;
-                renderStep(pages, bufframes, jsonData.steps[currentIndex]);
+                renderStep(pages, bufframes, jsonData.steps[currentIndex], attrs);
                 // currentIndex++;
             }
         }
@@ -131,7 +169,7 @@
                 // console.log(pages, bufframes);
                 for (let s = idx; s < jsonData.steps.length; s++) {
                     if (pauseFlag) break;
-                    renderStep(pages, bufframes, jsonData.steps[s]);
+                    renderStep(pages, bufframes, jsonData.steps[s], attrs);
                     currentIndex = s;
                     await sleep(1000);
                 }
