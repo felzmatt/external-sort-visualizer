@@ -17,7 +17,10 @@ class Tuple:
         return "-" if self.empty else str(self.value)
 
     def __lt__(self, other):
-        return self.value < other.value
+        try:
+            return self.value < other.value
+        except TypeError:
+            print(self.value, other.value, self, other)
     def __eq__(self, other):
         return self.value == other.value
     def __repr__(self):

@@ -25,7 +25,12 @@ class Sort:
             self.buffer.append(Frame(data))
 
         for i in range(self.B):
-            data = [Tuple(value = csvdata[i * self.tuples_per_frame + j]) for j in range(self.tuples_per_frame)]
+            data = []
+            for j in range(self.tuples_per_frame):
+                if i*self.tuples_per_frame + j < len(csvdata):
+                    data.append(Tuple(value=csvdata[i*self.tuples_per_frame + j]))
+                else:
+                    data.append(Tuple(empty= True))
             self.relation.append(Frame(data))
     
     def export_json(self):
